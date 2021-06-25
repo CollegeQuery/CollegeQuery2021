@@ -1,0 +1,127 @@
+{% extends "query/layout.html" %}
+{% load static %}
+{% block head %}
+    <title>Questions Page</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog Template">
+    <meta name="author" content="">    
+    <link rel="shortcut icon" href="#"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+    
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="/static/assets/css/theme-2.css">
+
+{% endblock %}
+{% block body %}
+    
+    <header class="header text-center">	    
+	    <h1 class="blog-name pt-lg-4 mb-0"><a href="index.html">Profile</a></h1>
+        
+	    <nav class="navbar navbar-expand-lg navbar-dark" >
+           
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div id="navigation" class="collapse navbar-collapse flex-column" >
+				<div class="profile-section pt-3 pt-lg-0">
+				    {% for i in details %}
+					<!--<form action="{% url 'image' %}" method="post">
+					  {% csrf_token %}
+					  <input type="file" id="img" name="img" accept="image/*">
+					  <input type="text" name="t" value="{{ i.username }}" hidden>
+                      <input type="submit">
+				     </form>
+					 <img class="profile-image mb-3 rounded-circle mx-auto" src="{{ i.photo }}" alt="image" >-->
+					<img class="profile-image mb-3 rounded-circle mx-auto" src="/static/assets/images/blog/user.jpg" alt="image" >
+					
+					
+					<div class="bio mb-3">
+					
+					<h2>{{ i.username }}</h2><br><h5>{{ i.mailid }}</h5>
+					</div><!--//bio-->
+					<!--<ul class="social-list list-inline py-3 mx-auto">
+			            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
+			            <li class="list-inline-item"><a href="#"><i class="fab fa-github-alt fa-fw"></i></a></li>
+			           
+			            
+			        </ul><!--//social-list-->
+			        <hr> 
+				</div><!--//profile-section-->
+				
+				<ul class="navbar-nav flex-column text-left">
+					<li class="nav-item active">
+					    <a class="nav-link" href="http://127.0.0.1:8000/home/{{ i.id }}"><i class="fas fa-home fa-fw mr-2"></i>Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="http://127.0.0.1:8000/ask/{{ i.id }}" name="username" value="{{i.username}}"><i class="fas fa-bookmark fa-fw mr-2"></i>Ask Question</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link" href="{% url 'index' %}"><i class="fas fa-user fa-fw mr-2"></i>Logout</a>
+					</li>
+				</ul>
+				
+			</div>
+		</nav>
+    </header>
+    
+    <div class="main-wrapper">
+	    <section class="cta-section theme-bg-light py-5">
+	    	
+	    	<div class="container text-center">
+		    	<img src="/static/assets/images/logo_2.png" alt="" width="60" height="60" class="d-inline-block align-text-left rounded-circle" style="background-color:white;">
+			    <h2 class="heading">College Query</h2>
+			    <div class="intro">Ask Question Get Answers</div>
+		    </div><!--//container-->
+	    </section>
+	    <section class="blog-list px-3 py-5 p-md-5">
+		    <div class="container">
+			    <div class="item mb-5">
+				    <div class="media">
+					 <form class="signup-form form-inline justify-content-center pt-3" action="{% url 'search' %}" method="post">
+                     {% csrf_token %}
+                    <div class="form-group">
+                           <input type="text" id="text" name="question" class="form-control-lg  mr-md-2 " placeholder="Enter question here!!">
+                          <input type="text" id="text" name="userid" value="{{ i.id }}" hidden>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="search">
+					
+                </form>
+				    </div><!--//media-->
+			    </div><!--//item-->
+				{% for q in questions %}
+			    <div class="item mb-5">
+				    <div class="media">
+					    <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="/static/assets/images/blog/user.jpg" alt="image">
+					    <div class="media-body">
+						    <h3 class="title mb-1"><a href="http://127.0.0.1:8000/question/{{ i.id }}/{{ q.id }}" name="q_id" value="{{ q.id }}">{{ q.title }}</a></h3>
+							<div class="">{{ q.description }}</div>
+						    <div class="meta mb-1"><span class="date">{{ q.date }}</span><span class="time">{{ q.time }}</span>{% for u in uname %} {% if u.id == q.id %}<span class="comment"> {{u.username}}   </span>{% endif %} {% endfor %} </div>
+						    <div class="intro">Answers will display here</div>
+						    <a class="more-link" href="http://127.0.0.1:8000/question/{{ i.id }}/{{ q.id }}">Read more &rarr;</a>
+					    </div><!--//media-body-->
+				    </div><!--//media-->
+			    </div><!--//item-->
+				{% endfor %}
+			    
+			 
+	    </section>
+	    
+	    <footer class="footer text-center py-2 theme-bg-dark ">
+		   
+	        
+                <small class="copyright">Designed  by <a href="#" target="_blank">College Query team</a></small>
+		   
+	    </footer>
+    
+    </div><!--//main-wrapper-->
+   {% endfor %}
+{% endblock %}
+
